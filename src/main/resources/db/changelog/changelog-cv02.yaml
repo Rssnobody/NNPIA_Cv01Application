@@ -1,0 +1,201 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-app-user
+      author: silvia-cmilanska
+      changes:
+        - createTable:
+            tableName: app_user
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_name
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_date
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+
+        - addAutoIncrement:
+            tableName: app_user
+            columnDataType: bigint
+            columnName: id
+            generationType: ALWAYS
+            startWith: 0
+            incrementBy: 1
+
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: task
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: title
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                 name: creation_date
+                 type: timestamptz
+                 constraints:
+                   nullable: false
+              - column:
+                  name: update_date
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: author_id
+            baseTableName: task
+            constraintName: task_author_id_fk
+            referencedColumnNames: id
+            referencedTableName: app_user
+            validate: true
+
+        - createTable:
+            tableName: app_user_role
+            columns:
+              - column:
+                  name: app_user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: app_user_role
+            constraintName: app_user_role_author_id_fk
+            referencedColumnNames: id
+            referencedTableName: app_user
+            validate: true
+
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: app_user_role
+            constraintName: app_user_role_role_id_fk
+            referencedColumnNames: id
+            referencedTableName: role
+            validate: true
+
+  - changeSet:
+      id: insert-app-user
+      author: silvia-cmilanska
+      changes:
+        - insert:
+            tableName: app_user
+            columns:
+              - column:
+                  name: id
+                  value: 0
+              - column:
+                  name: user_name
+                  value: testUser
+              - column:
+                  name: password
+                  value: tajneheslo
+              - column:
+                  name: active
+                  value: true
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: update_date
+                  value: now()
+
+        - insert:
+            tableName: task
+            columns:
+              - column:
+                  name: id
+                  value: 0
+              - column:
+                  name: title
+                  value: HelloWorld
+              - column:
+                  name: description
+                  value: Generate hello world message!
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: update_date
+                  value: now()
+              - column:
+                  name: author_id
+                  value: 0
+
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  value: 0
+              - column:
+                  name: name
+                  value: admin
+
+        - insert:
+            tableName: app_user_role
+            columns:
+              - column:
+                  name: app_user_id
+                  value: 0
+              - column:
+                  name: role_id
+                  value: 0

@@ -1,5 +1,6 @@
-package cz.upce.cv01;
+package cz.upce.cv01.controllers;
 
+import cz.upce.cv01.DAOs.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class HelloController {
 
     @PostMapping("students")
     @ResponseStatus(HttpStatus.CREATED)
-    public Student createStudent(@RequestBody Student student){
+    public Student createStudent(@RequestBody Student student) {
         System.out.println("Name: " + student.getName());
         System.out.println("Age: " + student.getAge());
         return student;

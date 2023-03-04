@@ -1,4 +1,4 @@
-package cz.upce.cv01;
+package cz.upce.cv01.DAOs;
 
 import lombok.*;
 
