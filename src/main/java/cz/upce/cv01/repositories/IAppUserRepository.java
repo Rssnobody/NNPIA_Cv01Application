@@ -1,7 +1,7 @@
 package cz.upce.cv01.repositories;
 
-import cz.upce.cv01.DAOs.AppUser;
-import cz.upce.cv01.DAOs.Role;
+import cz.upce.cv01.domain.AppUser;
+import cz.upce.cv01.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

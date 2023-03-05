@@ -1,6 +1,6 @@
 package cz.upce.cv01.controllers;
 
-import cz.upce.cv01.DAOs.Student;
+import cz.upce.cv01.domain.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

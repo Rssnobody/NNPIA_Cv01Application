@@ -1,7 +1,7 @@
 package cz.upce.cv01.controllers;
 
-import cz.upce.cv01.DAOs.AppUser;
-import cz.upce.cv01.DAOs.Role;
+import cz.upce.cv01.domain.AppUser;
+import cz.upce.cv01.domain.Role;
 import cz.upce.cv01.repositories.IAppUserRepository;
 import cz.upce.cv01.repositories.IRoleRepository;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,5 @@
-package cz.upce.cv01.DAOs;
+package cz.upce.cv01.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
