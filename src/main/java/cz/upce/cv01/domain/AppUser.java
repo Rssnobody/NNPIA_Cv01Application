@@ -2,6 +2,7 @@ package cz.upce.cv01.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,16 +24,18 @@ import java.util.List;
 */
 
 @Data
+@NoArgsConstructor
 @Entity
 public class AppUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String userName;
     @Column
     private String password;
     @Column
-    private boolean active;
+    private Boolean active;
     @Column
     private LocalDateTime creationDate;
     @Column
@@ -44,4 +47,21 @@ public class AppUser {
     @ManyToMany(mappedBy = "users")
     @JsonManagedReference
     private List<Role> roles = Collections.emptyList();
+
+    public AppUser(String userName, String password, Boolean active, LocalDateTime creationDate, LocalDateTime updateDate) {
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+    }
+
+    public AppUser(Long id, String userName, String password, Boolean active, LocalDateTime creationDate, LocalDateTime updateDate) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+    }
 }

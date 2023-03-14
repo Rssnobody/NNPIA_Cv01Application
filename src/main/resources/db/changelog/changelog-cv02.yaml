@@ -101,6 +101,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: app_user
             validate: true
+            onDelete: CASCADE
 
         - createTable:
             tableName: app_user_role
@@ -123,6 +124,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: app_user
             validate: true
+            onDelete: CASCADE
 
         - addForeignKeyConstraint:
             baseColumnNames: role_id
@@ -131,6 +133,19 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: role
             validate: true
+            onDelete: CASCADE
+
+        - dropForeignKeyConstraint:
+            - baseTableName: task
+            - constraintName: task_author_id_fk
+
+        - dropForeignKeyConstraint:
+            - baseTableName: app_user_role
+            - constraintName: app_user_role_author_id_fk
+
+        - dropForeignKeyConstraint:
+            - baseTableName: app_user_role
+            - constraintName: app_user_role_role_id_fk
 
   - changeSet:
       id: insert-app-user
@@ -148,6 +163,50 @@ databaseChangeLog:
               - column:
                   name: password
                   value: tajneheslo
+              - column:
+                  name: active
+                  value: true
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: update_date
+                  value: now()
+
+        - insert:
+            tableName: app_user
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: user_name
+                  value: user1
+              - column:
+                  name: password
+                  value: heslo1
+              - column:
+                  name: active
+                  value: true
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: update_date
+                  value: now()
+
+        - insert:
+            tableName: app_user
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: user_name
+                  value: user2
+              - column:
+                  name: password
+                  value: heslo2
               - column:
                   name: active
                   value: true
@@ -181,6 +240,28 @@ databaseChangeLog:
                   value: 0
 
         - insert:
+            tableName: task
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: title
+                  value: task1
+              - column:
+                  name: description
+                  value: This is task 1!
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: update_date
+                  value: now()
+              - column:
+                  name: author_id
+                  value: 1
+
+        - insert:
             tableName: role
             columns:
               - column:
@@ -191,6 +272,16 @@ databaseChangeLog:
                   value: admin
 
         - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: regular user
+
+        - insert:
             tableName: app_user_role
             columns:
               - column:
@@ -199,3 +290,13 @@ databaseChangeLog:
               - column:
                   name: role_id
                   value: 0
+
+        - insert:
+            tableName: app_user_role
+            columns:
+              - column:
+                  name: app_user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 1
