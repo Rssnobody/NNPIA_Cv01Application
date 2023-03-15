@@ -1,5 +1,6 @@
 package cz.upce.cv01.dto;
 
+import cz.upce.cv01.domain.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,25 @@ public class AppUserInputDto {
     private LocalDateTime creationDate;
 
     private LocalDateTime updateDate;
+
+    public AppUser toEntity() {
+        return new AppUser(
+                getUserName(),
+                getPassword(),
+                getActive(),
+                getCreationDate(),
+                getUpdateDate()
+        );
+    }
+
+    public AppUser toEntity(final Long id) {
+        return new AppUser(
+                id,
+                getUserName(),
+                getPassword(),
+                getActive(),
+                getCreationDate(),
+                getUpdateDate()
+        );
+    }
 }

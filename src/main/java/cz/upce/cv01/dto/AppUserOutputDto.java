@@ -27,4 +27,15 @@ public class AppUserOutputDto {
 
     private List<Role> roles = Collections.emptyList();
     private List<Task> tasks = Collections.emptyList();
+
+    public AppUserOutputDto(Long id, String userName, String password, Boolean active,
+                            LocalDateTime creationDate, LocalDateTime updateDate, List<Role> roles) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.roles = roles;
+    }
 }

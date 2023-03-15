@@ -38,7 +38,7 @@ public class AppUserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody AppUserInputDto inputUser) {
         inputUser.setPassword(new BCryptPasswordEncoder().encode(inputUser.getPassword()));
-        var result = appUserService.create(toEntity(inputUser));
+        var result = appUserService.create(inputUser.toEntity());
 
         final UserDetails userDetails = appUserDetailsService.loadUserByUsername(inputUser.getUserName());
         final String jwt = jwtProvider.createToken(userDetails);
@@ -67,7 +67,7 @@ public class AppUserController {
     public ResponseEntity<AppUserOutputDto> findUserById(@PathVariable final Long id) throws ResourceNotFoundException {
         var result = appUserService.findUserById(id);
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @GetMapping("/find")
@@ -76,7 +76,7 @@ public class AppUserController {
 
         return ResponseEntity.ok(result
                 .stream()
-                .map(AppUserController::toDto)
+                .map(AppUser::toDto)
                 .collect(Collectors.toList()));
     }
 
@@ -84,7 +84,7 @@ public class AppUserController {
     public ResponseEntity<AppUserOutputDto> findByUserName(@PathVariable String userName) {
         var result = appUserService.findByUserName(userName);
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @GetMapping(path="/findByRole/{roleName}")
@@ -93,64 +93,30 @@ public class AppUserController {
 
         return ResponseEntity.ok(result
                 .stream()
-                .map(AppUserController::toDto)
+                .map(AppUser::toDto)
                 .collect(Collectors.toList()));
     }
 
     @PostMapping("")
     public ResponseEntity<AppUserOutputDto> create(@RequestBody @Validated final AppUserInputDto inputAppUser) {
         inputAppUser.setPassword(new BCryptPasswordEncoder().encode(inputAppUser.getPassword()));
-        var result = appUserService.create(toEntity(inputAppUser));
+        var result = appUserService.create(inputAppUser.toEntity());
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AppUserOutputDto> update(@PathVariable final Long id,
                                                    @RequestBody final AppUserInputDto inputAppUser) {
         inputAppUser.setPassword(new BCryptPasswordEncoder().encode(inputAppUser.getPassword()));
-        var result = appUserService.update(toEntity(id, inputAppUser));
+        var result = appUserService.update(inputAppUser.toEntity(id));
 
-        return ResponseEntity.ok(toDto(result));
+        return ResponseEntity.ok(result.toDto());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable final Long id) {
         appUserService.delete(id);
         return ResponseEntity.ok(null);
-    }
-
-    private static AppUserOutputDto toDto(final AppUser appUser) {
-        return new AppUserOutputDto(
-                appUser.getId(),
-                appUser.getUserName(),
-                appUser.getPassword(),
-                appUser.getActive(),
-                appUser.getCreationDate(),
-                appUser.getUpdateDate(),
-                appUser.getRoles(),
-                appUser.getTasks()
-        );
-    }
-
-    private static AppUser toEntity(final AppUserInputDto inputAppUser) {
-        return new AppUser(
-                inputAppUser.getUserName(),
-                inputAppUser.getPassword(),
-                inputAppUser.getActive(),
-                inputAppUser.getCreationDate(),
-                inputAppUser.getUpdateDate()
-        );
-    }
-
-    private static AppUser toEntity(final Long id, final AppUserInputDto inputAppUser) {
-        return new AppUser(
-                id,
-                inputAppUser.getUserName(),
-                inputAppUser.getPassword(),
-                inputAppUser.getActive(),
-                inputAppUser.getCreationDate(),
-                inputAppUser.getUpdateDate()
-        );
     }
 }

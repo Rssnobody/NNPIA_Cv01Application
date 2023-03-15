@@ -13,3 +13,8 @@ spring:
       ddl-auto: validate
   liquibase:
     change-log: classpath:db/changelog/changelog-master.yaml
+  graphql:
+    path: /graphql
+    graphiql:
+      enabled: true
+      path: /graphiql

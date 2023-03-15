@@ -1,6 +1,7 @@
 package cz.upce.cv01.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import cz.upce.cv01.dto.AppUserOutputDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -63,5 +64,18 @@ public class AppUser {
         this.active = active;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
+    }
+
+    public AppUserOutputDto toDto() {
+        return new AppUserOutputDto(
+                getId(),
+                getUserName(),
+                getPassword(),
+                getActive(),
+                getCreationDate(),
+                getUpdateDate(),
+                getRoles(),
+                getTasks()
+        );
     }
 }
