@@ -3,6 +3,7 @@ package cz.upce.cv01.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.upce.cv01.dto.AppUserOutputDto;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -38,13 +39,18 @@ public class AppUser {
     @Column
     private Boolean active;
     @Column
+    @EqualsAndHashCode.Exclude
     private LocalDateTime creationDate;
     @Column
+    @EqualsAndHashCode.Exclude
     private LocalDateTime updateDate;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "author")
     @JsonManagedReference
     private List<Task> tasks = Collections.emptyList();
+
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "users")
     @JsonManagedReference
     private List<Role> roles = Collections.emptyList();
